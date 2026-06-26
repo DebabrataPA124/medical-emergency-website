@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Anxiety Self-Evaluation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #FAF5E0;
+      margin: 0;
+      padding: 20px;
+      color: #087167;
+    }
+    h1 { text-align: center; color: #087167; }
+    .card {
+      background: #ffffff;
+      border-radius: 15px;
+      padding: 25px;
+      max-width: 600px;
+      margin: 20px auto;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+    }
+    .card.active { display: flex; }
+    .question { font-size: 18px; font-weight: bold; margin-bottom: 20px; text-align: center; }
+    .options { display: flex; flex-direction: column; width: 100%; }
+    .options label {
+      background: #f0f0f0;
+      color: #087167;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      padding: 12px;
+      margin: 6px 0;
+      cursor: pointer;
+      transition: 0.3s ease;
+      text-align: center;
+    }
+    .options input[type="radio"] { display: none; }
+    .options input[type="radio"]:checked + label {
+      background: #E68B67;
+      color: white;
+      border-color: #c76d4f;
+    }
+    .next-btn {
+      margin-top: 20px;
+      padding: 12px 24px;
+      background: #E68B67;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .next-btn:hover { background: #c76d4f; }
+    .result {
+      background: #ffffff;
+      border-radius: 15px;
+      max-width: 600px;
+      margin: 30px auto;
+      padding: 25px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      display: none;
+    }
+    .result h2 { color: #087167; }
+    .tip { margin-top: 10px; font-style: italic; color: #333; }
+    .suggestions { margin-top: 20px; text-align: left; }
+    .suggestions h3 { color: #087167; margin-bottom: 10px; }
+    .suggestions ul { list-style-type: disc; padding-left: 20px; color: #333; }
+  </style>
+</head>
+<body>
+
+<h1>Anxiety Self-Evaluation</h1>
+
+<form id="anxietyForm">
+  <div id="questionCards"></div>
+  <div class="result" id="resultBox"></div>
+</form>
+
+<script>
+  let questions = [];
+  let currentQuestion = 0;
+  let score = 0;
+
+  async function loadQuestions() {
+    const res = await fetch("get_questions.php?test=Anxiety");
+    questions = await res.json();
+    renderQuestions();
+  }
+
+  function renderQuestions() {
+    const container = document.getElementById("questionCards");
+    container.innerHTML = "";
+    questions.forEach((q, idx) => {
+      const card = document.createElement("div");
+      card.classList.add("card");
+      if (idx === 0) card.classList.add("active");
+      card.innerHTML = `
+        <div class="question">Q${idx + 1}. ${q.question}</div>
+        <div class="options">
+          <input type="radio" id="q${idx}_0" name="q${idx}" value="0">
+          <label for="q${idx}_0">${q.option1}</label>
+          <input type="radio" id="q${idx}_1" name="q${idx}" value="1">
+          <label for="q${idx}_1">${q.option2}</label>
+          <input type="radio" id="q${idx}_2" name="q${idx}" value="2">
+          <label for="q${idx}_2">${q.option3}</label>
+          <input type="radio" id="q${idx}_3" name="q${idx}" value="3">
+          <label for="q${idx}_3">${q.option4}</label>
+        </div>
+        <button class="next-btn" type="button" onclick="nextQuestion(${idx})">
+          ${idx === questions.length - 1 ? 'Submit' : 'Next'}
+        </button>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  function nextQuestion(idx) {
+    const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+    if (!selected) {
+      alert("Please select an option.");
+      return;
+    }
+    score += parseInt(selected.value);
+
+    const cards = document.querySelectorAll(".card");
+    cards[idx].classList.remove("active");
+
+    if (idx + 1 < questions.length) {
+      cards[idx + 1].classList.add("active");
+    } else {
+      showResult();
+    }
+  }
+
+  async function showResult() {
+    let level = "";
+    if (score <= 10) level = "low";
+    else if (score <= 20) level = "moderate";
+    else level = "high";
+
+    const res = await fetch(`get_guides.php?test=Anxiety&level=${level}`);
+    const guide = await res.json();
+
+    const resultBox = document.getElementById("resultBox");
+    resultBox.style.display = "block";
+    resultBox.innerHTML = `
+      <h2>Your Score: ${score}/${questions.length * 3}</h2>
+      <p class="tip"><strong>Doctor Tip:</strong> ${guide.doctor_tip}</p>
+      <div class="suggestions">
+        <h3>Self-Help Suggestions</h3>
+        ${guide.self_help_suggestions}
+      </div>
+    `;
+  }
+
+  loadQuestions();
+</script>
+
+</body>
+</html>

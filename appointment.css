@@ -1,0 +1,228 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #faf5e0;
+  color: #333;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.background-shine {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.12) 0%, transparent 60%),
+    radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.08) 0%, transparent 60%),
+    linear-gradient(135deg, #e68b67, #087167);
+  background-blend-mode: overlay, overlay, normal;
+  backdrop-filter: blur(35px) brightness(1.1);
+  animation: crystalFlow 20s ease-in-out infinite alternate;
+  z-index: -1;
+  overflow: hidden;
+}
+.background-shine::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(120deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0.1) 100%);
+  transform: rotate(0deg);
+  animation: shineGlint 8s linear infinite;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+
+
+.container {
+  max-width: 950px;
+  margin: auto;
+  background-color: rgba(250, 245, 224, 0.95);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  transition: 0.3s ease;
+}
+
+.container:hover {
+  transform: scale(1.002);
+}
+
+.logo {
+  display: block;
+  margin: 0 auto 25px;
+  max-width: 160px;
+}
+
+h2, h3 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #087167;
+  font-size: 1.9rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.column {
+  flex: 1 1 45%;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #333;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+input[type="datetime-local"],
+select,
+textarea {
+  padding: 12px 16px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  background-color: #fefaf5;
+  font-size: 1rem;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #087167;
+  box-shadow: 0 0 8px rgba(8, 113, 103, 0.3);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.submit-btn {
+  padding: 14px;
+  background-color: #e68b67;
+  color: white;
+  border: none;
+  border-radius: 14px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #087167;
+}
+
+.selected-products {
+  margin-top: 35px;
+  background-color: #fff1ea;
+  padding: 20px;
+  border-radius: 14px;
+  border: 1px solid #e68b67;
+  box-shadow: 0 4px 12px rgba(230, 139, 103, 0.1);
+}
+
+.selected-products .product {
+  margin-bottom: 10px;
+  font-weight: 500;
+  color: #444;
+}
+
+iframe {
+  display: block;
+  margin: 30px auto 0;
+  width: 100%;
+  height: 300px;
+  border: none;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+}
+
+.success-message {
+  text-align: center;
+  padding: 40px 20px;
+  background: #faf5e0;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+}
+
+.success-message h2 {
+  color: #087167;
+  margin-bottom: 10px;
+  font-size: 2rem;
+}
+
+.success-message p {
+  font-size: 1.1rem;
+  margin: 10px 0 30px;
+}
+
+.another-booking {
+  background-color: #e68b67;
+  color: white;
+  padding: 12px 20px;
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.another-booking:hover {
+  background-color: #087167;
+}
+
+@media (max-width: 768px) {
+  .column {
+    flex: 1 1 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 10px;
+  }
+
+  .container {
+    padding: 20px;
+  }
+
+  h2, h3 {
+    font-size: 1.5rem;
+  }
+
+  .submit-btn {
+    font-size: 1rem;
+    padding: 12px;
+  }
+}

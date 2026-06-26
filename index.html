@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tests</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #FAF5E0; /* Light cream */
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      padding: 30px;
+      font-size: 2.5rem;
+      color: #087167; /* Teal color */
+      font-weight: bold;
+    }
+
+    .test-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      padding: 40px;
+    }
+
+    .test-card {
+      background: #fff;
+      border-radius: 18px;
+      padding: 25px;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s ease;
+    }
+
+    .test-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .test-card img {
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+      margin-bottom: 20px;
+    }
+
+    .test-title {
+      font-size: 1.4rem;
+      font-weight: bold;
+      margin: 15px 0;
+      color: #333;
+    }
+
+    .test-link {
+      display: inline-block;
+      padding: 12px 18px;
+      background-color: #087167; /* Teal */
+      color: white;
+      border-radius: 12px;
+      text-decoration: none;
+      margin-top: 15px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .test-link:hover {
+      background-color: #E68B67; /* Salmon */
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .test-container {
+        padding: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Tests</h1>
+  <div class="test-container">
+    <div class="test-card">
+      <img src="adhd.png" alt="ADHD">
+      <div class="test-title">ADHD Self-Evaluation</div>
+      <a href="adhd.html" class="test-link">Take the test</a>
+    </div>
+    <div class="test-card">
+      <img src="depression.png" alt="Depression">
+      <div class="test-title">Depression Risk Quiz</div>
+      <a href="depression.html" class="test-link">Take the test</a>
+    </div>
+    <div class="test-card">
+      <img src="social.png" alt="Social Style">
+      <div class="test-title">Discover Your Social Style</div>
+      <a href="social.html" class="test-link">Take the test</a>
+    </div>
+    <div class="test-card">
+      <img src="anxiety.png" alt="Anxiety">
+      <div class="test-title">Discover Your Anxiety Level</div>
+      <a href="anxiety.html" class="test-link">Take the test</a>
+    </div>
+  </div>
+</body>
+</html>
